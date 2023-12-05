@@ -24,16 +24,16 @@ export class AuthService{
   }
 
   public isLogged():boolean{
-    return localStorage.getItem("accessToken") != null;
+    return localStorage.getItem("token") != null;
   }
 
   public setLogged(result:any):boolean{
-    localStorage.setItem("accessToken",result.accessToken);
+    localStorage.setItem("token",result.token);
     return true;
   }
 
   public logout():void{
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem("token");
     this.router.navigate([""]);
   }
 }

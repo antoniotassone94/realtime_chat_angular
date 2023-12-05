@@ -1,7 +1,7 @@
-<form #loginForm="ngForm" (ngSubmit)="doLogin(loginForm)">
-    <label for="email">E-mail</label>
+<form #loginForm="ngForm" class="login-form" (ngSubmit)="doLogin(loginForm)">
+    <label for="email" class="label">E-mail</label>
     <input type="text" name="email" id="email" required email ngModel>
-    <label for="password">Password</label>
+    <label for="password" class="label">Password</label>
     <input type="password" name="password" id="password" required ngModel>
     <button type="submit" [disabled]="!loginForm.valid">Login now</button>
 </form>

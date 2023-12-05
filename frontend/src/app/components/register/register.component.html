@@ -1,14 +1,14 @@
-<form #registerForm="ngForm" (ngSubmit)="doRegister(registerForm)">
-    <label for="name">Name</label>
+<form #registerForm="ngForm" class="register-form" (ngSubmit)="doRegister(registerForm)">
+    <label for="name" class="label">Name</label>
     <input type="text" name="name" id="name" required ngModel>
-    <label for="surname">Surname</label>
+    <label for="surname" class="label">Surname</label>
     <input type="text" name="surname" id="surname" required ngModel>
-    <label for="dateOfBirth">Date of birth</label>
+    <label for="dateOfBirth" class="label">Date of birth</label>
     <input type="date" name="dateOfBirth" id="dateOfBirth" required ngModel>
-    <label for="email">E-mail</label>
+    <label for="email" class="label">E-mail</label>
     <input type="text" name="email" id="email" required email ngModel>
-    <label for="password">Password</label>
+    <label for="password" class="label">Password</label>
     <input type="password" name="password" id="password" required ngModel>
     <button type="submit" [disabled]="!registerForm.valid">Register now</button>
 </form>
-{{errorMessage}}
+{{message}}

@@ -11,16 +11,16 @@ import {AuthService} from "../../services/auth.service";
 })
 
 export class RegisterComponent implements OnInit{
-  private _errorMessage:string;
+  private _message:string;
   private authService:AuthService;
 
   constructor(private router:Router){
-    this._errorMessage = "";
+    this._message = "";
     this.authService = inject(AuthService);
   }
 
-  public get errorMessage():string{
-    return this._errorMessage;
+  public get message():string{
+    return this._message;
   }
 
   public ngOnInit():void{}
@@ -28,11 +28,11 @@ export class RegisterComponent implements OnInit{
   public doRegister(form:NgForm):void{
     if(form.valid){
       this.authService.registerRequest(form.value).subscribe({
-        next:(response:object) => {
-          console.log(response)
+        next:(response:any) => {
+          this._message = response.message;
         },
         error:(error:HttpErrorResponse) => {
-          this._errorMessage = error.statusText + " (" + error.status + "): User registration error.";
+          this._message = error.statusText + " (" + error.status + "): User registration error.";
         }
       });
     }
