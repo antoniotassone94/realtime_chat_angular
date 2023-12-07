@@ -6,6 +6,15 @@ const auth: Router = express.Router();
 
 auth.post("/login", async (req, res) => {
     const {email,password} = req.body;
+    if(!email || !password){
+        return res.status(406).send({message:"Missing required fields.",check:false});
+    }
+    if(typeof email !== "string" || typeof password !== "string"){
+        return res.status(400).send({message:"Bad request, type of some fields is incorrect.",check:false});
+    }
+    if(email === "" || password === ""){
+        return res.status(400).send({message:"Bad request, some fields are empty.",check:false});
+    }
     const result:string|undefined = await doLogin(email,password);
     if(!result){
         return res.status(401).send({message:"Unauthorized.",check:false});
@@ -15,11 +24,20 @@ auth.post("/login", async (req, res) => {
 
 auth.post("/register", async (req, res) => {
     const {name,surname,dateOfBirth,email,password} = req.body;
+    if(!name || !surname || !dateOfBirth || !email || !password){
+        return res.status(406).send({message:"Missing required fields.",check:false});
+    }
+    if(typeof name !== "string" || typeof surname !== "string" || typeof dateOfBirth !== "string" || typeof email !== "string" || typeof password !== "string"){
+        return res.status(400).send({message:"Bad request, type of some fields is incorrect.",check:false});
+    }
+    if(name === "" || surname === "" || dateOfBirth === "" || email === "" || password === ""){
+        return res.status(400).send({message:"Bad request, some fields are empty.",check:false});
+    }
     const result:UserSchema|null = await doRegister(name,surname,dateOfBirth,email,password);
     if(!result){
         return res.status(500).send({message:"Internal server error.",check:false});
     }
-    return res.status(200).send({message:"Registration done successfully.",check:true});
+    return res.status(201).send({message:"Registration done successfully.",check:true});
 })
 
 export {auth}
