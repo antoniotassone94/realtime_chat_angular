@@ -1,7 +1,10 @@
 <button (click)="doLogout()">Logout</button><br><br>
+<ul>
+    <li *ngFor="let message of messagesreceived">{{message}}</li>
+</ul>
 <form #applicationForm="ngForm" (ngSubmit)="sendMessage(applicationForm)">
     <input type="hidden" name="token" [ngModel]="token">
-    <input type="text" name="message" id="message" placeholder="Insert the text of the message" required ngModel>
+    <input type="text" name="text" id="text" placeholder="Insert the text of the message" required ngModel>
     <button type="submit">Send message</button>
 </form>
-{{message}}
+{{errorMessage}}

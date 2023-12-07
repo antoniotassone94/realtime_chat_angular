@@ -1,9 +1,8 @@
-import {Component,OnInit, inject} from "@angular/core";
-import {HttpErrorResponse} from "@angular/common/http";
+import {Component,OnInit,inject} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import {HttpRequestService} from "../../services/httprequest.service";
-import {environment} from "../../../environments/environment";
 import {AuthService} from "../../services/auth.service";
+import {MessagesManagerService} from "../../services/messagesmanager.service";
+import {PrintMessageService} from "../../services/printmessage.service";
 
 @Component({
   selector: "app-private",
@@ -12,27 +11,51 @@ import {AuthService} from "../../services/auth.service";
 })
 
 export class PrivateComponent implements OnInit{
-  private _message:string;
+  private _errorMessage:string;
   private _token:string;
-  private httprequest:HttpRequestService;
+  private _messagesreceived:string[];
   private authservice:AuthService;
+  private messagesmanager:MessagesManagerService;
+  private printmessage:PrintMessageService;
 
   constructor(){
-    this._message = "";
+    this._errorMessage = "";
     this._token = <string>localStorage.getItem("token");
-    this.httprequest = inject(HttpRequestService);
+    this._messagesreceived = [];
     this.authservice = inject(AuthService);
+    this.messagesmanager = inject(MessagesManagerService);
+    this.printmessage = inject(PrintMessageService);
   }
 
-  public get message():string{
-    return this._message;
+  public get errorMessage():string{
+    return this._errorMessage;
   }
 
   public get token():string{
     return this._token;
   }
 
-  public ngOnInit():void{}
+  public get messagesreceived():string[]{
+    return this._messagesreceived;
+  }
+
+  public ngOnInit():void{
+    this.messagesmanager.receiveMessage();
+    this.printmessage.getNextSystemMessage().subscribe({
+      next: (textmessage:string) => {
+        if(textmessage !== ""){
+          this._messagesreceived.push("System: " + textmessage);
+        }
+      }
+    });
+    this.printmessage.getNextClientsMessage().subscribe({
+      next: (textmessage:string) => {
+        if(textmessage !== ""){
+          this._messagesreceived.push("Another user: " + textmessage);
+        }
+      }
+    });
+  }
 
   public doLogout():void{
     this.authservice.logout();
@@ -40,19 +63,7 @@ export class PrivateComponent implements OnInit{
 
   public sendMessage(form:NgForm):void{
     if(form.valid){
-      this.httprequest.httpPostRequest(environment.serverUrl + "message/send",form.value).subscribe({
-        next: (response:any) => {
-          console.log(response);
-        },
-        error: (error:HttpErrorResponse) => {
-          if(error.status === 401 || error.status === 403){
-            this.authservice.logout();
-          }else{
-            const errorMessage:string = error.statusText + " (" + error.status + ")";
-            this._message = errorMessage;
-          }
-        }
-      });
+      this.messagesmanager.sendMessage(form.value.text);
     }
   }
 }
