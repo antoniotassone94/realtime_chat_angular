@@ -13,4 +13,5 @@ body{
     padding:0;
     margin:0;
     border:0px solid transparent;
+    background: linear-gradient(90deg, hsla(212, 35%, 58%, 1) 0%, hsla(218, 32%, 80%, 1) 100%);
 }

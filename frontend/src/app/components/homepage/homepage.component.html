@@ -1,4 +1,8 @@
 <div *ngIf="loginView;then login else register"></div>
 <ng-template #login><app-login></app-login></ng-template>
 <ng-template #register><app-register></app-register></ng-template>
-<button (click)="switchLoginRegister()">Switch to login/register form</button>
+<div class="container-btn-switch">
+<button (click)="switchLoginRegister()" class="btn-switch">Switch to login/register form</button>
+</div>
+
+
