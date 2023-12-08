@@ -3,6 +3,7 @@ import {NgForm} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {MessagesManagerService} from "../../services/messagesmanager.service";
 import {PrintMessageService} from "../../services/printmessage.service";
+import {MessageModel} from "../../models/message.model";
 
 @Component({
   selector: "app-private",
@@ -63,7 +64,11 @@ export class PrivateComponent implements OnInit{
 
   public sendMessage(form:NgForm):void{
     if(form.valid){
-      this.messagesmanager.sendMessage(form.value.text);
+      const message:MessageModel = new MessageModel();
+      message.date = new Date();
+      message.sender = <string>localStorage.getItem("token");
+      message.text = form.value.text;
+      this.messagesmanager.sendMessage(message);
     }
   }
 }

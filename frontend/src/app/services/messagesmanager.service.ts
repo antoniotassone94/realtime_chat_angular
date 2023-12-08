@@ -1,6 +1,7 @@
 import {Injectable,inject} from "@angular/core";
 import {Socket} from "ngx-socket-io";
 import {PrintMessageService} from "./printmessage.service";
+import {MessageModel} from "../models/message.model";
 
 @Injectable({
   providedIn:"root"
@@ -13,8 +14,8 @@ export class MessagesManagerService{
     this.printmessage = inject(PrintMessageService);
   }
 
-  public sendMessage(message:string){
-    return this.socket.emit("send",message);
+  public sendMessage(message:MessageModel){
+    return this.socket.emit("send",JSON.stringify(message));
   }
 
   public receiveMessage(){

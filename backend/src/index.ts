@@ -20,8 +20,10 @@ const ioserver = new io.Server(3000,{
 ioserver.on("connection",(socket) => {
     console.log("New client has connected correctly.");
     socket.on("send",(message) => {
+        const details:any = JSON.parse(message);
+        console.log(details);
         socket.emit("receiveSystem","The system has received the message correctly.");
-        socket.broadcast.emit("receiveClients",message);
+        socket.broadcast.emit("receiveClients",details._text);
     })
 })
 
