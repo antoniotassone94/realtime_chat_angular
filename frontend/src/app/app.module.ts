@@ -10,6 +10,7 @@ import {AuthService} from "./services/auth.service";
 import {HttpRequestService} from "./services/httprequest.service";
 import {MessagesManagerService} from "./services/messagesmanager.service";
 import {PrintMessageService} from "./services/printmessage.service";
+import {SwitchLoginRegisterFormService} from "./services/switchloginregisterform.service";
 
 import {MainComponent} from "./components/main/main.component";
 import {LoginComponent} from "./components/login/login.component";
@@ -44,7 +45,8 @@ const config:SocketIoConfig = {
     AuthService,
     HttpRequestService,
     MessagesManagerService,
-    PrintMessageService
+    PrintMessageService,
+    SwitchLoginRegisterFormService
   ],
   bootstrap: [MainComponent]
 })

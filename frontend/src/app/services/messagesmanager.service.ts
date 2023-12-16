@@ -18,8 +18,15 @@ export class MessagesManagerService{
     return this.socket.emit("send",JSON.stringify(message));
   }
 
+  public extractMessages(){
+    return this.socket.emit("extract",JSON.stringify({token:localStorage.getItem("token")}));
+  }
+
   public receiveMessage(){
-    this.socket.on("receiveSystem",(message:string) => {
+    this.socket.on("exception",(message:string) => {
+      this.printmessage.setNextExceptionMessage(message);
+    });
+    this.socket.on("systemResponse",(message:string) => {
       this.printmessage.setNextSystemMessage(message);
     });
     this.socket.on("receiveClients",(message:string) => {

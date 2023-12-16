@@ -26,18 +26,18 @@ export async function verifyUser(email:string,password:string):Promise<UserSchem
     return user;
 }
 
-export function checkJwt(accessToken:string):JwtPayload|null{
+export function checkJwt(accessToken:string):JwtPayload|undefined{
     try{
         const payload:string|JwtPayload = jwt.verify(accessToken,<string>process.env.JWT_PRIVATE);
         if(!payload){
-            return null;
+            return undefined;
         }
         if(typeof payload === "string"){
-            return null;
+            return undefined;
         }
         return <JwtPayload>payload;
     }catch(error){
-        return null;
+        return undefined;
     }
 }
 

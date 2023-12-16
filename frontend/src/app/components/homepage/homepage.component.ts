@@ -1,4 +1,5 @@
-import {Component,OnInit} from "@angular/core";
+import {Component,OnInit, inject} from "@angular/core";
+import {SwitchLoginRegisterFormService} from "../../services/switchloginregisterform.service";
 
 @Component({
   selector: "app-homepage",
@@ -8,18 +9,17 @@ import {Component,OnInit} from "@angular/core";
 
 export class HomepageComponent implements OnInit{
   private _loginView:boolean;
+  private actualview:SwitchLoginRegisterFormService;
 
   constructor(){
-    this._loginView = true;
+    this.actualview = inject(SwitchLoginRegisterFormService);
+    this._loginView = this.actualview.getLoginView();
   }
 
   public get loginView():boolean{
+    this._loginView = this.actualview.getLoginView();
     return this._loginView;
   }
 
   public ngOnInit():void{}
-
-  public switchLoginRegister():void{
-    this._loginView = !this._loginView;
-  }
 }

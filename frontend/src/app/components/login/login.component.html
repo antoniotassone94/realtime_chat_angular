@@ -1,12 +1,13 @@
 <div class="container-login">
     <form #loginForm="ngForm" class="login-form" (ngSubmit)="doLogin(loginForm)">
-        <!-- <label for="email" class="label">E-mail</label> -->
         <input type="text" name="email" id="email" placeholder="✉️ Email" required email ngModel>
-        <!-- <label for="password" class="label">Password</label>  -->
         <input type="password" name="password" id="password" placeholder="🔒 Password" required ngModel>
         <button type="submit" class="btn-login" [disabled]="!loginForm.valid">Login now</button>
         <div class="message">
             <p>{{errorMessage}}</p>
+        </div>
+        <div class="container-btn-switch">
+            <button (click)="gotoRegister()" class="btn-switch">Go to register form</button>
         </div>
     </form>
 </div>

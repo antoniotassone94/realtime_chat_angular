@@ -3,6 +3,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
+import {SwitchLoginRegisterFormService} from "../../services/switchloginregisterform.service";
 
 @Component({
   selector: "app-register",
@@ -13,10 +14,12 @@ import {AuthService} from "../../services/auth.service";
 export class RegisterComponent implements OnInit{
   private _message:string;
   private authService:AuthService;
+  private actualview:SwitchLoginRegisterFormService;
 
   constructor(private router:Router){
     this._message = "";
     this.authService = inject(AuthService);
+    this.actualview = inject(SwitchLoginRegisterFormService);
   }
 
   public get message():string{
@@ -36,5 +39,9 @@ export class RegisterComponent implements OnInit{
         }
       });
     }
+  }
+
+  public gotoLogin():void{
+    this.actualview.setLoginView(true);
   }
 }

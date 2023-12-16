@@ -1,19 +1,16 @@
 <div class="container-register">
     <form #registerForm="ngForm" class="register-form" (ngSubmit)="doRegister(registerForm)">
-    <!-- <label for="name" class="label">Name</label> -->
-    <input type="text" name="name" id="name" placeholder="Name" required ngModel>
-   <!--  <label for="surname" class="label">Surname</label> -->
-    <input type="text" name="surname" id="surname" placeholder="Surname" required ngModel>
-   <!--  <label for="dateOfBirth" class="label">Date of birth</label> -->
-    <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="DD/MM/YYYY" required ngModel>
-  <!--   <label for="email" class="label">E-mail</label> -->
-    <input type="text" name="email" id="email" placeholder="Email" required email ngModel>
-<!--     <label for="password" class="label">Password</label> -->
-    <input type="password" name="password" id="password" placeholder="Password" required ngModel>
-    <button type="submit" class="btn-register" [disabled]="!registerForm.valid">Register now</button>
-    <div class="message">
-<p>{{message}}</p>
-    </div>
-</form>
+        <input type="text" name="name" id="name" placeholder="Name" required ngModel>
+        <input type="text" name="surname" id="surname" placeholder="Surname" required ngModel>
+        <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="DD/MM/YYYY" required ngModel>
+        <input type="text" name="email" id="email" placeholder="Email" required email ngModel>
+        <input type="password" name="password" id="password" placeholder="Password" required ngModel>
+        <button type="submit" class="btn-register" [disabled]="!registerForm.valid">Register now</button>
+        <div class="message">
+            <p>{{message}}</p>
+        </div>
+        <div class="container-btn-switch">
+            <button (click)="gotoLogin()" class="btn-switch">Go to login form</button>
+        </div>
+    </form>
 </div>
-
