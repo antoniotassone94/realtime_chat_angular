@@ -42,6 +42,7 @@ export class PrivateComponent implements OnInit{
   }
 
   public ngOnInit():void{
+    this._messagesreceived.splice(0,this._messagesreceived.length);
     this.messagesmanager.receiveMessage();
     this.printmessage.getNextSystemMessage().subscribe({
       next: (textmessage:string) => {

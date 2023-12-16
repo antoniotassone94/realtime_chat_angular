@@ -2,6 +2,7 @@ import {Injectable,inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {HttpRequestService} from "./httprequest.service";
+import {PrintMessageService} from "./printmessage.service";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -10,9 +11,11 @@ import {environment} from "../../environments/environment";
 
 export class AuthService{
   private httprequest:HttpRequestService;
+  private printmessage:PrintMessageService;
 
   constructor(private router:Router){
     this.httprequest = inject(HttpRequestService);
+    this.printmessage = inject(PrintMessageService);
   }
 
   public loginRequest(body:object):Observable<any>{
@@ -34,6 +37,9 @@ export class AuthService{
 
   public logout():void{
     localStorage.removeItem("token");
+    this.printmessage.setNextClientsMessage("");
+    this.printmessage.setNextExceptionMessage("");
+    this.printmessage.setNextSystemMessage("");
     this.router.navigate([""]);
   }
 }
