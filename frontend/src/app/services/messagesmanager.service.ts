@@ -29,8 +29,11 @@ export class MessagesManagerService{
     this.socket.on("systemResponse",(message:string) => {
       this.printmessage.setNextSystemMessage(message);
     });
-    this.socket.on("receiveClients",(message:string) => {
-      this.printmessage.setNextClientsMessage(message);
+    this.socket.on("receiveAnotherClient",(message:string) => {
+      this.printmessage.setNextClientsMessageReceived(message);
+    });
+    this.socket.on("receiveSameClient",(message:string) => {
+      this.printmessage.setNextClientsMessageSended(message);
     });
   }
 }

@@ -32,7 +32,7 @@ ioserver.on("connection",(socket) => {
             socket.emit("exception",JSON.stringify({message:"Token not valid.",code:401,check:false}));
         }else{
             const email:string = payload.email;
-            const listmessages:MessageSchema[]|null = await Message.find({sender:email});
+            const listmessages:MessageSchema[]|null = await Message.find();
             if(listmessages === null){
                 socket.emit("exception",JSON.stringify({message:"Internal server error.",code:500,check:false}));
             }else{
@@ -64,7 +64,8 @@ ioserver.on("connection",(socket) => {
                 if(message === null){
                     socket.emit("exception",JSON.stringify({message:"Internal server error.",code:500,check:false}));
                 }else{
-                    socket.broadcast.emit("receiveClients",JSON.stringify(message));
+                    socket.broadcast.emit("receiveAnotherClient",JSON.stringify(message));
+                    socket.emit("receiveSameClient",JSON.stringify(message));
                 }
             }
         }

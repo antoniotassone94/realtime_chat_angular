@@ -37,7 +37,8 @@ export class AuthService{
 
   public logout():void{
     localStorage.removeItem("token");
-    this.printmessage.setNextClientsMessage("");
+    this.printmessage.setNextClientsMessageReceived("");
+    this.printmessage.setNextClientsMessageSended("");
     this.printmessage.setNextExceptionMessage("");
     this.printmessage.setNextSystemMessage("");
     this.router.navigate([""]);

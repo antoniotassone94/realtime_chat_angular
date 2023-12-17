@@ -1,6 +1,6 @@
 <button (click)="doLogout()">Logout</button><br><br>
 <ul>
-    <li *ngFor="let message of messagesreceived">{{message.date}} and {{message.sender}}: {{message.text}}</li>
+    <li *ngFor="let message of messageslist">{{(message.sended) ? "sended" : "received"}} - {{message.date}} and {{message.sender}}: {{message.text}}</li>
 </ul>
 <form #applicationForm="ngForm" (ngSubmit)="sendMessage(applicationForm)">
     <input type="hidden" name="token" [ngModel]="token">

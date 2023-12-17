@@ -10,16 +10,20 @@ export class PrintMessageService{
   private observablesystem:Observable<string>;
   private nextexceptionmessage:BehaviorSubject<string>;
   private observableexception:Observable<string>;
-  private nextclientsmessage:BehaviorSubject<string>;
-  private observableclients:Observable<string>;
+  private nextclientsmessagereceived:BehaviorSubject<string>;
+  private observableclientsreceived:Observable<string>;
+  private nextclientsmessagesended:BehaviorSubject<string>;
+  private observableclientssended:Observable<string>;
 
   constructor(){
     this.nextsystemmessage = new BehaviorSubject<string>("");
     this.observablesystem = this.nextsystemmessage.asObservable();
     this.nextexceptionmessage = new BehaviorSubject<string>("");
     this.observableexception = this.nextexceptionmessage.asObservable();
-    this.nextclientsmessage = new BehaviorSubject<string>("");
-    this.observableclients = this.nextclientsmessage.asObservable();
+    this.nextclientsmessagereceived = new BehaviorSubject<string>("");
+    this.observableclientsreceived = this.nextclientsmessagereceived.asObservable();
+    this.nextclientsmessagesended = new BehaviorSubject<string>("");
+    this.observableclientssended = this.nextclientsmessagesended.asObservable();
   }
 
   public getNextSystemMessage():Observable<string>{
@@ -38,11 +42,19 @@ export class PrintMessageService{
     this.nextexceptionmessage.next(message);
   }
 
-  public getNextClientsMessage():Observable<string>{
-    return this.observableclients;
+  public getNextClientsMessageReceived():Observable<string>{
+    return this.observableclientsreceived;
   }
 
-  public setNextClientsMessage(message:string):void{
-    this.nextclientsmessage.next(message);
+  public setNextClientsMessageReceived(message:string):void{
+    this.nextclientsmessagereceived.next(message);
+  }
+
+  public getNextClientsMessageSended():Observable<string>{
+    return this.observableclientssended;
+  }
+
+  public setNextClientsMessageSended(message:string):void{
+    this.nextclientsmessagesended.next(message);
   }
 }

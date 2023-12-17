@@ -1,6 +1,8 @@
 import express,{Router} from "express";
 import {doLogin,doRegister} from "./auth_functions";
-import {UserSchema} from "../models/user.model";
+import {User, UserSchema} from "../models/user.model";
+import {JwtPayload} from "jsonwebtoken";
+import {checkJwt} from "./token_manager";
 
 const auth: Router = express.Router();
 
@@ -38,6 +40,16 @@ auth.post("/register", async (req, res) => {
         return res.status(500).send({message:"Internal server error.",check:false});
     }
     return res.status(201).send({message:"Registration done successfully.",check:true});
+})
+
+auth.post("/getemail", async (req, res) => {
+    const {token} = req.body;
+    const payload:JwtPayload|undefined = checkJwt(token);
+    if(!payload){
+        return res.status(401).send({message:"Token not valid.",check:false});
+    }
+    const email:string = payload.email;
+    return res.status(200).send({message:email,check:false});
 })
 
 export {auth}

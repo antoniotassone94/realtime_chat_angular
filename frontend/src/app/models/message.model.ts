@@ -3,12 +3,14 @@ export class MessageModel{
     private _text:string;
     private _sender:string;
     private _date:Date;
+    private _sended:boolean;
 
-    constructor(){
+    constructor(_sended:boolean){
         this._id = "";
         this._text = "";
         this._sender = "";
         this._date = new Date();
+        this._sended = _sended;
     }
 
     public get id():string{
@@ -41,5 +43,13 @@ export class MessageModel{
 
     public set date(_date:Date){
         this._date = _date;
+    }
+
+    public get sended():boolean{
+        return this._sended;
+    }
+
+    public set sended(value:boolean){
+        this._sended = value;
     }
 }

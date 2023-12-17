@@ -1,10 +1,13 @@
 import {Component,OnInit,inject} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import {HttpErrorResponse} from "@angular/common/http";
 import {AuthService} from "../../services/auth.service";
 import {MessagesManagerService} from "../../services/messagesmanager.service";
 import {PrintMessageService} from "../../services/printmessage.service";
+import {HttpRequestService} from "../../services/httprequest.service";
 import {MessageModel} from "../../models/message.model";
 import {ExceptionModel} from "../../models/exception.model";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: "app-private",
@@ -15,18 +18,20 @@ import {ExceptionModel} from "../../models/exception.model";
 export class PrivateComponent implements OnInit{
   private _errorMessage:string;
   private _token:string;
-  private _messagesreceived:MessageModel[];
+  private _messageslist:MessageModel[];
   private authservice:AuthService;
   private messagesmanager:MessagesManagerService;
   private printmessage:PrintMessageService;
+  private httprequest:HttpRequestService;
 
   constructor(){
     this._errorMessage = "";
     this._token = <string>localStorage.getItem("token");
-    this._messagesreceived = [];
+    this._messageslist = [];
     this.authservice = inject(AuthService);
     this.messagesmanager = inject(MessagesManagerService);
     this.printmessage = inject(PrintMessageService);
+    this.httprequest = inject(HttpRequestService);
   }
 
   public get errorMessage():string{
@@ -37,24 +42,43 @@ export class PrivateComponent implements OnInit{
     return this._token;
   }
 
-  public get messagesreceived():MessageModel[]{
-    return this._messagesreceived;
+  public get messageslist():MessageModel[]{
+    return this._messageslist;
   }
 
   public ngOnInit():void{
-    this._messagesreceived.splice(0,this._messagesreceived.length);
+    this._messageslist.splice(0,this._messageslist.length);
     this.messagesmanager.receiveMessage();
     this.printmessage.getNextSystemMessage().subscribe({
       next: (textmessage:string) => {
         if(textmessage !== ""){
-          const jsonarray:any[] = JSON.parse(textmessage);
-          for(let i = 0;i < jsonarray.length;i++){
-            const messagereceived:MessageModel = new MessageModel();
-            messagereceived.id = jsonarray[i]._id;
-            messagereceived.sender = jsonarray[i].sender;
-            messagereceived.date = new Date(jsonarray[i].date);
-            messagereceived.text = jsonarray[i].text;
-            this._messagesreceived.push(messagereceived);
+          if(this.authservice.isLogged() === true){
+            this.httprequest.httpPostRequest(environment.serverUrl + "auth/getemail",{token:localStorage.getItem("token")}).subscribe({
+              next: (response:any) => {
+                const personalEmail:string = response.message;
+                const jsonarray:any[] = JSON.parse(textmessage);
+                for(let i = 0;i < jsonarray.length;i++){
+                  if(jsonarray[i].sender === personalEmail){
+                    const messagesended:MessageModel = new MessageModel(true);
+                    messagesended.id = jsonarray[i]._id;
+                    messagesended.sender = jsonarray[i].sender;
+                    messagesended.date = new Date(jsonarray[i].date);
+                    messagesended.text = jsonarray[i].text;
+                    this._messageslist.push(messagesended);
+                  }else{
+                    const messagereceived:MessageModel = new MessageModel(false);
+                    messagereceived.id = jsonarray[i]._id;
+                    messagereceived.sender = jsonarray[i].sender;
+                    messagereceived.date = new Date(jsonarray[i].date);
+                    messagereceived.text = jsonarray[i].text;
+                    this._messageslist.push(messagereceived);
+                  }
+                }
+              },
+              error: (error:HttpErrorResponse) => {
+                this.authservice.logout();
+              }
+            });
           }
         }
       }
@@ -76,16 +100,29 @@ export class PrivateComponent implements OnInit{
         }
       }
     });
-    this.printmessage.getNextClientsMessage().subscribe({
+    this.printmessage.getNextClientsMessageReceived().subscribe({
       next: (textmessage:string) => {
         if(textmessage !== ""){
           const jsonmessage:any = JSON.parse(textmessage);
-          const messagereceived:MessageModel = new MessageModel();
+          const messagereceived:MessageModel = new MessageModel(false);
           messagereceived.id = jsonmessage._id;
           messagereceived.sender = jsonmessage.sender;
           messagereceived.date = new Date(jsonmessage.date);
           messagereceived.text = jsonmessage.text;
-          this._messagesreceived.push(messagereceived);
+          this._messageslist.push(messagereceived);
+        }
+      }
+    });
+    this.printmessage.getNextClientsMessageSended().subscribe({
+      next: (textmessage:string) => {
+        if(textmessage !== ""){
+          const jsonmessage:any = JSON.parse(textmessage);
+          const messagesended:MessageModel = new MessageModel(true);
+          messagesended.id = jsonmessage._id;
+          messagesended.sender = jsonmessage.sender;
+          messagesended.date = new Date(jsonmessage.date);
+          messagesended.text = jsonmessage.text;
+          this._messageslist.push(messagesended);
         }
       }
     });
@@ -98,7 +135,7 @@ export class PrivateComponent implements OnInit{
 
   public sendMessage(form:NgForm):void{
     if(form.valid){
-      const message:MessageModel = new MessageModel();
+      const message:MessageModel = new MessageModel(true);
       message.date = new Date();
       message.sender = <string>localStorage.getItem("token");
       message.text = form.value.text;
