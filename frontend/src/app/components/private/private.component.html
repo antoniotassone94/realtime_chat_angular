@@ -1,6 +1,5 @@
 <div class="container">
-
-       <div class="container-form">
+    <div class="container-form">
         <button (click)="doLogout()" class="btn-logout">Logout</button><br><br>
         <form #applicationForm="ngForm" (ngSubmit)="sendMessage(applicationForm)">
             <input type="hidden" name="token" [ngModel]="token">
@@ -9,14 +8,14 @@
         </form>
         {{errorMessage}}
     </div>
-    <div class="container-message" >
+    <div class="container-message">
         <ul>
             <li *ngFor="let message of messageslist" [appStylecontainermessage]="message.sended"> 
-               <div class="send-message" >
-                <p class="message-sender">{{message.date| date:"dd/MM/yyyy hh:mm"}}<br> {{message.sender}}: </p>
-                <p class="message-text" [appStylereceivedsended]="message.sended">{{message.text}}</p>
-               </div></li>
+            <div class="send-message">
+                    <p class="message-sender">{{message.date| date:"dd/MM/yyyy HH:mm"}}<br> {{message.sender}}: </p>
+                    <p class="message-text" [appStylereceivedsended]="message.sended">{{message.text}}</p>
+            </div>
+            </li>
         </ul>
     </div>
- 
-</div>
+ </div>

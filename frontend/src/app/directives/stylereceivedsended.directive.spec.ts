@@ -1,8 +1,9 @@
-import { StylereceivedsendedDirective } from './stylereceivedsended.directive';
+import {ElementRef} from "@angular/core";
+import {StyleReceivedSendedDirective} from "./stylereceivedsended.directive";
 
-describe('StylereceivedsendedDirective', () => {
-  it('should create an instance', () => {
-    const directive = new StylereceivedsendedDirective();
+describe("StyleReceivedSendedDirective", () => {
+  it("should create an instance", () => {
+    const directive = new StyleReceivedSendedDirective(new ElementRef(undefined));
     expect(directive).toBeTruthy();
   });
 });

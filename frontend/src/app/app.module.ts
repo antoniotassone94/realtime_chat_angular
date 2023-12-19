@@ -18,9 +18,10 @@ import {RegisterComponent} from "./components/register/register.component";
 import {HomepageComponent} from "./components/homepage/homepage.component";
 import {PrivateComponent} from "./components/private/private.component";
 
+import {StyleReceivedSendedDirective} from "./directives/stylereceivedsended.directive";
+import {StyleContainerMessageDirective} from "./directives/stylecontainermessage.directive";
+
 import {environment} from "../environments/environment";
-import { StylereceivedsendedDirective } from './directives/stylereceivedsended.directive';
-import { StylecontainermessageDirective } from './directives/stylecontainermessage.directive';
 
 const config:SocketIoConfig = {
   url: environment.websocketUrl,
@@ -34,8 +35,8 @@ const config:SocketIoConfig = {
     RegisterComponent,
     HomepageComponent,
     PrivateComponent,
-    StylereceivedsendedDirective,
-    StylecontainermessageDirective
+    StyleReceivedSendedDirective,
+    StyleContainerMessageDirective
   ],
   imports: [
     BrowserModule,

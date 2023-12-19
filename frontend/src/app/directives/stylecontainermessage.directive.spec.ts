@@ -1,8 +1,9 @@
-import { StylecontainermessageDirective } from './stylecontainermessage.directive';
+import {ElementRef} from "@angular/core";
+import {StyleContainerMessageDirective} from "./stylecontainermessage.directive";
 
-describe('StylecontainermessageDirective', () => {
-  it('should create an instance', () => {
-    const directive = new StylecontainermessageDirective();
+describe("StyleContainerMessageDirective", () => {
+  it("should create an instance", () => {
+    const directive = new StyleContainerMessageDirective(new ElementRef(undefined));
     expect(directive).toBeTruthy();
   });
 });
