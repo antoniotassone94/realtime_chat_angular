@@ -1,10 +1,19 @@
-<button (click)="doLogout()">Logout</button><br><br>
-<ul>
-    <li *ngFor="let message of messageslist">{{(message.sended) ? "sended" : "received"}} - {{message.date}} and {{message.sender}}: {{message.text}}</li>
-</ul>
-<form #applicationForm="ngForm" (ngSubmit)="sendMessage(applicationForm)">
-    <input type="hidden" name="token" [ngModel]="token">
-    <input type="text" name="text" id="text" placeholder="Insert the text of the message" required ngModel>
-    <button type="submit">Send message</button>
-</form>
-{{errorMessage}}
+<div class="container">
+
+       <div class="container-form">
+        <button (click)="doLogout()" class="btn-logout">Logout</button><br><br>
+        <form #applicationForm="ngForm" (ngSubmit)="sendMessage(applicationForm)">
+            <input type="hidden" name="token" [ngModel]="token">
+            <input type="text" name="text" id="text" placeholder="Insert the text of the message" required ngModel>
+            <button type="submit">Send message</button>
+        </form>
+        {{errorMessage}}
+    </div>
+    <div class="container-message">
+        <ul>
+            <li *ngFor="let message of messageslist">{{(message.sended) ? "sended" : "received"}} - {{message.date}} and
+                {{message.sender}}: {{message.text}}</li>
+        </ul>
+    </div>
+ 
+</div>

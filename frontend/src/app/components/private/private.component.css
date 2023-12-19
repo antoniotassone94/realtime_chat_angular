@@ -1,0 +1,26 @@
+
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+.container-message{
+    width: 60%;
+}
+.container-form{
+    width: 40%;
+}
+
+.btn-logout{
+    width: 20%;
+    height: 35px;
+    margin: 25px;
+    border-radius: 5px;
+    border: none;
+    color: rgb(53, 53, 53);
+    font-size: 18px;
+    cursor: pointer;
+    background: linear-gradient(to right, #00c9ff, #92fe9d);
+}
