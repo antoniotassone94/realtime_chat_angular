@@ -92,10 +92,7 @@ export class PrivateComponent implements OnInit{
           if(exception.code === 401 || exception.code === 403){
             this.authservice.logout();
           }else{
-
-            //scrivere qui la gestione degli errori
-            console.error(exception.message);
-
+            this._errorMessage = exception.message;
           }
         }
       }
