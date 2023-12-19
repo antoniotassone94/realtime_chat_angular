@@ -5,14 +5,17 @@
         <form #applicationForm="ngForm" (ngSubmit)="sendMessage(applicationForm)">
             <input type="hidden" name="token" [ngModel]="token">
             <input type="text" name="text" id="text" placeholder="Insert the text of the message" required ngModel>
-            <button type="submit">Send message</button>
+            <button type="submit" class="btn-send">Send message</button>
         </form>
         {{errorMessage}}
     </div>
-    <div class="container-message">
+    <div class="container-message" >
         <ul>
-            <li *ngFor="let message of messageslist">{{(message.sended) ? "sended" : "received"}} - {{message.date}} and
-                {{message.sender}}: {{message.text}}</li>
+            <li *ngFor="let message of messageslist" [appStylecontainermessage]="message.sended"> 
+               <div class="send-message" >
+                <p class="message-sender">{{message.date| date:"dd/MM/yyyy hh:mm"}}<br> {{message.sender}}: </p>
+                <p class="message-text" [appStylereceivedsended]="message.sended">{{message.text}}</p>
+               </div></li>
         </ul>
     </div>
  
