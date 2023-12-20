@@ -23,42 +23,42 @@
     flex-direction: column;
 }
 
-.container-message ul{
+.container-message ul {
     display: flex;
     flex-direction: column;
     margin: 20px;
-    list-style-type: none;  
+    list-style-type: none;
     border-left: 1px solid black;
 }
 
-.container-message li{
+.container-message li {
     display: flex;
 }
 
-.send-message{
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   width: 50%;
+.send-message {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
 }
 
-.container-message .message-text{
+.container-message .message-text {
     font-size: 13px;
     width: 50%;
     height: 30px;
-    border:none;
+    border: none;
     border-radius: 5px;
     display: flex;
     align-items: center;
     padding-left: 5px;
 }
 
-.container-message .message-sender{
-    width:auto;
+.container-message .message-sender {
+    width: auto;
     padding: 10px;
 }
 
-.container-form .btn-send{
+.container-form .btn-send {
     width: max-content;
     height: 35px;
     margin: 25px;
@@ -70,18 +70,18 @@
     background: linear-gradient(to right, #00c9ff, #92fe9d);
 }
 
-.container-form input{
+.container-form input {
     width: 200px;
     height: 40px;
     border-radius: 5px;
     border: none;
 }
 
-:focus{
+:focus {
     outline: none;
 }
 
-.btn-logout{
+.btn-logout {
     width: 20%;
     height: 35px;
     margin: 25px;
@@ -91,4 +91,50 @@
     font-size: 18px;
     cursor: pointer;
     background: linear-gradient(to right, #00c9ff, #92fe9d);
+}
+
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0;
+    }
+
+    .container-form {
+        height: auto;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+
+    }
+
+    .container-form form {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container-form input {
+        width: 52%;
+
+    }
+
+    .container-form .message-text {
+        width: 90;
+    }
+
+    .container-message {
+        height: 70%;
+        width: 100%;
+    }
+
+    .btn-send {
+        width: auto;
+        margin: 5px !important;
+
+    }
 }
