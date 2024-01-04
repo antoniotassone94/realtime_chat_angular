@@ -71,3 +71,12 @@ p{
     cursor: pointer;
     background-color:transparent;
 }
+
+@media screen and (max-width: 768px) {
+    .container-login{
+        height: 100%;
+    }
+    .login-form{
+        width: 90%;
+    }
+}

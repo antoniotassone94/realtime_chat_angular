@@ -76,3 +76,13 @@ p{
     cursor: pointer;
     background-color:transparent;
 }
+
+
+@media screen and (max-width: 768px) {
+    .container-register{
+        height: 100%;
+    }
+    .register-form{
+        width: 90%;
+    }
+}
